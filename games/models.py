@@ -3,7 +3,7 @@ from django.db import models
 # Create your models here.
 
 class Category(models.Model):
-    name = models.CharField(max_length=100, unique=True)
+    name = models.CharField(max_length=100, unique=True, primary_key=True)
 
     class Meta:
         verbose_name = "Category"
