@@ -1,24 +1,25 @@
-from .models import Game, Category
+from .models import Game
 from rest_framework import viewsets
 from rest_framework import permissions
 from rest_framework import filters
-from games.serializers import GameSearchSerializer, CatSearchSerializer
+from games.serializers import GameSearchSerializer, CategorizedSearchSerializer
 from rest_framework import request
 from django.db.models import Q
 from rest_framework.response import Response
 
 
-
 class GamesView(viewsets.ModelViewSet):
+    permission_classes = [permissions.IsAuthenticated]
     queryset = Game.objects.all()
     serializer_class = GameSearchSerializer
     filter_backends = [filters.SearchFilter]
     search_fields = ['name']
-    # permission_classes = [permissions.IsAuthenticated]
+
 
 class CategorizedGamesView(viewsets.ModelViewSet):
+    permission_classes = [permissions.IsAuthenticated]
     queryset = Game.objects.all()
-    serializer_class = CatSearchSerializer
+    serializer_class = CategorizedSearchSerializer
 
     def get_queryset(self):
         filter_ = self.request.GET.get('filter')
@@ -29,5 +30,5 @@ class CategorizedGamesView(viewsets.ModelViewSet):
         return queryset
 
     def list(self, request, *args, **kwargs):
-        serializer = CatSearchSerializer(self.get_queryset(), many=True)
+        serializer = CategorizedSearchSerializer(self.get_queryset(), many=True)
         return Response(serializer.data)
