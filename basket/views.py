@@ -2,6 +2,7 @@ from rest_framework import viewsets
 from rest_framework import permissions
 from rest_framework.response import Response
 from django.db.models import Q
+from rest_framework.views import APIView
 
 from .models import Basket, BasketItem
 from games.models import Game
@@ -16,23 +17,26 @@ class BasketAPIView(viewsets.ModelViewSet):
 
     def get_queryset(self, request):
         username = self.request.GET.get('username')
-        user_info = User.objects.filter(username=username)
-        user_id = user_info[0].id
-        queryset = Basket.objects.filter(user=user_id)
+        user = User.objects.get(username=username)
+        queryset = Basket.objects.filter(user=user.id)
         return queryset
 
     def list(self, request, *args, **kwargs):
         serializer = BasketSerializer(self.get_queryset(request), many=True)
         return Response(serializer.data)
 
-    def add_to_basket(self, request):
+
+class AddToBasketView(APIView):
+    permission_classes = [permissions.IsAuthenticated]
+
+    def post(self, request):
         game_name = self.request.GET.get('name')
         username = self.request.GET.get('username')
         user = User.objects.get(username=username)
         game = Game.objects.get(name=game_name)
 
         try:
-            basket = Basket.get_object_or_404(Q(user__username__icontains=username))
+            basket = Basket.objects.get(Q(user__username__icontains=username))
             basket_item = BasketItem(game=game, basket=basket)
             basket_item.save()
             
@@ -41,4 +45,6 @@ class BasketAPIView(viewsets.ModelViewSet):
             basket.save()
             basket_item = BasketItem(game=game, basket=basket)
             basket_item.save()
+
+        return Response({'ok':True}, 200)
 

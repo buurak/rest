@@ -1,11 +1,8 @@
 from django.urls import include, path
-# from rest_framework import routers
-from .views import BasketAPIView
-
-# router = routers.DefaultRouter()
-# router.register(r'store', views.BasketAPIView)
+from .views import BasketAPIView, AddToBasketView
 
 
 urlpatterns = [
     path('basket/', BasketAPIView.as_view({'get': 'list'}), name='basket'),
+    path('addtobasket/', AddToBasketView.as_view(), name='add-to-basket'),
 ]
