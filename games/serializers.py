@@ -1,13 +1,20 @@
-from .models import Game
+from .models import Game, OwnedGames
 from rest_framework import serializers
 
 
-class GameSearchSerializer(serializers.ModelSerializer):
+class GameSerializer(serializers.ModelSerializer):
     class Meta:
         model = Game
-        fields = ('url', 'name', 'year', 'category')
+        fields = ('id', 'name', 'year', 'category')
 
-class CategorizedSearchSerializer(serializers.ModelSerializer):
+        extra_kwargs = {
+            "id": {'required': False},
+        }
+
+
+class OwnedGameSerializer(serializers.ModelSerializer):
+    games = GameSerializer(many=True)
+
     class Meta:
-        model = Game
-        fields = ('name', 'year', 'category')
+        model = OwnedGames
+        fields = ('user','games')

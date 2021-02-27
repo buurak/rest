@@ -1,17 +1,18 @@
-from .models import Game
+from .models import Game, OwnedGames
 from rest_framework import viewsets
 from rest_framework import permissions
 from rest_framework import filters
-from games.serializers import GameSearchSerializer, CategorizedSearchSerializer
+from rest_framework.response import Response
+from games.serializers import GameSerializer, OwnedGameSerializer
 from rest_framework import request
 from django.db.models import Q
-from rest_framework.response import Response
+from django.contrib.auth.models import User
 
 
 class GamesView(viewsets.ModelViewSet):
     permission_classes = [permissions.IsAuthenticated]
     queryset = Game.objects.all()
-    serializer_class = GameSearchSerializer
+    serializer_class = GameSerializer
     filter_backends = [filters.SearchFilter]
     search_fields = ['name']
 
@@ -19,7 +20,7 @@ class GamesView(viewsets.ModelViewSet):
 class CategorizedGamesView(viewsets.ModelViewSet):
     permission_classes = [permissions.IsAuthenticated]
     queryset = Game.objects.all()
-    serializer_class = CategorizedSearchSerializer
+    serializer_class = GameSerializer
 
     def get_queryset(self):
         filter_ = self.request.GET.get('filter')
@@ -30,5 +31,19 @@ class CategorizedGamesView(viewsets.ModelViewSet):
         return queryset
 
     def list(self, request, *args, **kwargs):
-        serializer = CategorizedSearchSerializer(self.get_queryset(), many=True)
+        serializer = GameSerializer(self.get_queryset(), many=True)
+        return Response(serializer.data)
+        
+
+class OwnedGamesView(viewsets.ModelViewSet):
+    permission_classes = [permissions.IsAuthenticated]
+    queryset = OwnedGames.objects.all()
+    serializer_class = OwnedGameSerializer
+
+    def get_queryset(self):
+        queryset = OwnedGames.objects.filter(user=self.request.user)
+        return queryset
+
+    def list(self, request, *args, **kwargs):
+        serializer = OwnedGameSerializer(self.get_queryset(), many=True)
         return Response(serializer.data)
