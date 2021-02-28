@@ -17,7 +17,7 @@ pip3 install -r requirements.txt
 
 `GET /games/`
 
-    ```
+
     http://localhost:8000/games/
 
     http://localhost:8000/games/?search=search
@@ -25,4 +25,4 @@ pip3 install -r requirements.txt
     http://localhost:8000/games/categorized/?filter=Dövüş&search=search
 
     http://localhost:8000/games/ownedgames/
-    ```
+
