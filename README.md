@@ -19,9 +19,15 @@ pip3 install -r requirements.txt
 
     http://localhost:8000/games/
     
+`GET /search/`
+    
     http://localhost:8000/games/?search=search
 
+`GET /games/categorized/`
+
     http://localhost:8000/games/categorized/?filter=filter&search=search
+
+`GET /games/ownedgames/`
 
     http://localhost:8000/games/ownedgames/
 
