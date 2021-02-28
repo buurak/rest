@@ -36,4 +36,19 @@ pip3 install -r requirements.txt
 
     http://localhost:8000/games/ownedgames/
 
+## Basket
+### Request
+
+`GET /basket/`
+
+    http://localhost:8000/basket/
+    
+`POST`
+     
+    http://localhost:8000/addtobasket/?game_id=game_id
+
+    http://localhost:8000/removefrombasket/?game_id=game_id
+
+    http://localhost:8000/games/checkout/
+
 
