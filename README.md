@@ -11,6 +11,17 @@ pip3 install -r requirements.txt
 ## Run the app
 
     python3 manage.py runserver
+    
+## Authentication
+### Request
+
+`POST`
+
+    http://localhost:8000/api/token/
+     
+    http://localhost:8000/api/refresh/token/
+
+    http://localhost:8000/register/
 
 ## Get list of Games
 ### Request
@@ -18,16 +29,10 @@ pip3 install -r requirements.txt
 `GET /games/`
 
     http://localhost:8000/games/
-    
-`GET /search/`
-    
+     
     http://localhost:8000/games/?search=search
 
-`GET /games/categorized/`
-
     http://localhost:8000/games/categorized/?filter=filter&search=search
-
-`GET /games/ownedgames/`
 
     http://localhost:8000/games/ownedgames/
 
