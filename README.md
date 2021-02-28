@@ -26,7 +26,7 @@ pip3 install -r requirements.txt
 ## Get list of Games
 ### Request
 
-`GET /games/`
+`GET`
 
     http://localhost:8000/games/
      
@@ -39,7 +39,7 @@ pip3 install -r requirements.txt
 ## Basket
 ### Request
 
-`GET /basket/`
+`GET`
 
     http://localhost:8000/basket/
     
