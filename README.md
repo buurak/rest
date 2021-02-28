@@ -78,6 +78,7 @@ pip3 install -r requirements.txt
 ### Request
 
 `POST`
+
     http://localhost:8000/games/checkout/
 
 
