@@ -18,10 +18,10 @@ pip3 install -r requirements.txt
 `GET /games/`
 
     to view all games.
-    **http://localhost:8000/games/**
+    >http://localhost:8000/games/
     
     must take a search param to request to search for games.
-    **http://localhost:8000/games/?search=search**
+    >http://localhost:8000/games/?search=search**
     
     to categorize games, must take a filter param for categories, and a search param to search for the game.
     **http://localhost:8000/games/categorized/?filter=filter&search=search**
