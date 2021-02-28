@@ -62,8 +62,7 @@ class CheckOutView(APIView):
     def post(self, request):
         permission_classes = [permissions.IsAuthenticated]
         user = self.request.user
-        basket_id = self.request.GET.get('basket_id')
-        basket = Basket.objects.get(id=basket_id)
+        basket = Basket.objects.get(user=user)
         basket_items = basket.basket_item.all()
         owned_games, created = OwnedGames.objects.get_or_create(user=user)
         for basket_item in basket_items:
