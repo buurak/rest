@@ -15,7 +15,6 @@ class GamesView(viewsets.ModelViewSet):
     serializer_class = GameSerializer
     filter_backends = [filters.SearchFilter]
     search_fields = ['name']
-    asdljashjdakjsda
 
 
 class CategorizedGamesView(viewsets.ModelViewSet):
